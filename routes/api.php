@@ -25,7 +25,7 @@ Route::group(['prefix' => '/v1'], function () {
 	// delete a customers
 	Route::delete('customers/{id}','CustomerController@destroy');
 	// update existing customers
-	Route::put('customers','CustomerController@store');
+	Route::put('customers/{id}','CustomerController@update');
 	// create new customers
 	Route::post('customers','CustomerController@store');
 });
