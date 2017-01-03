@@ -16,3 +16,16 @@ use Illuminate\Http\Request;
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:api');
+
+Route::group(['prefix' => '/v1'], function () {
+	// get list of customers
+	Route::get('customers','CustomerController@index');
+	// get specific customers
+	Route::get('customers/{id}','CustomerController@show');
+	// delete a customers
+	Route::delete('customers/{id}','CustomerController@destroy');
+	// update existing customers
+	Route::put('customers','CustomerController@store');
+	// create new customers
+	Route::post('customers','CustomerController@store');
+});
