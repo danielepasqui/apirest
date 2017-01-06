@@ -19,6 +19,7 @@ class CustomerController extends Controller
      public function index()
     {
 		$customers = Customer::all();
+		$response=array();
 		foreach ($customers as $customer) {
 			$response[] = [
                     'id' => $customer->cid,
@@ -36,6 +37,7 @@ class CustomerController extends Controller
     public function show($id)
     {
 		$customer = Customer::find($id);
+		$response=array();
 		$response = [
 				'id' => $customer->cid,
 				'name' => $customer->name,
