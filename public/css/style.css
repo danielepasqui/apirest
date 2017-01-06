@@ -1,0 +1,18 @@
+#content td,th{
+	border: 2px solid #fff;
+    padding: 5px 40px 5px 40px;
+    text-align: center;
+}
+#content table{
+	margin-left: auto;
+	margin-right: auto;
+}
+#content{
+	margin-top: 5%;
+}
+#main_div{
+	vertical-align: initial;
+}
+#cover_container{
+	margin-top: 10%;
+}
