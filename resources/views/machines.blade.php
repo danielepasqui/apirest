@@ -8,6 +8,7 @@
 	<li><a href="/customers">Clienti</a></li>
 	<li><a href="/technologies">Tecnologie</a></li>
 	<li class="active"><a href="#">Macchine</a></li>
+	<li><a href="/databases">Database</a></li>
 @stop
 
 @section('main-content')

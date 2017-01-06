@@ -50,4 +50,15 @@ Route::group(['prefix' => '/v1'], function () {
 	Route::put('machines/{id}','MachineController@update');
 	// create new machines
 	Route::post('machines','MachineController@store');
+	
+	// get list of databases
+	Route::get('databases','DatabaseController@index');
+	// get specific databases
+	Route::get('databases/{id}','DatabaseController@show');
+	// delete a databases
+	Route::delete('databases/{id}','DatabaseController@destroy');
+	// update existing databases
+	Route::put('databases/{id}','DatabaseController@update');
+	// create new databases
+	Route::post('databases','DatabaseController@store');
 });

@@ -35,3 +35,9 @@ Route::get('/machines', function () {
 Route::get('/newmachine', function () {
     return view('new_machine');
 });
+Route::get('/databases', function () {
+    return view('databases');
+});
+Route::get('/newdatabase', function () {
+    return view('new_database');
+});
