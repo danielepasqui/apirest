@@ -7,6 +7,7 @@
 	<li class="active"><a href="#">Home</a></li>
 	<li><a href="/customers">Clienti</a></li>
 	<li><a href="/technologies">Tecnologie</a></li>
+	<li><a href="/machines">Macchine</a></li>
 @stop
 
 @section('main-content')

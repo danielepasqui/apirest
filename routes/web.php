@@ -29,3 +29,9 @@ Route::get('/technologies', function () {
 Route::get('/newtechnology', function () {
     return view('new_technology');
 });
+Route::get('/machines', function () {
+    return view('machines');
+});
+Route::get('/newmachine', function () {
+    return view('new_machine');
+});

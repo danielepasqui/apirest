@@ -39,4 +39,15 @@ Route::group(['prefix' => '/v1'], function () {
 	Route::put('technologies/{id}','TechnologyController@update');
 	// create new technologies
 	Route::post('technologies','TechnologyController@store');
+	
+	// get list of machines
+	Route::get('machines','MachineController@index');
+	// get specific machines
+	Route::get('machines/{id}','MachineController@show');
+	// delete a machines
+	Route::delete('machines/{id}','MachineController@destroy');
+	// update existing machines
+	Route::put('machines/{id}','MachineController@update');
+	// create new machines
+	Route::post('machines','MachineController@store');
 });
