@@ -28,4 +28,15 @@ Route::group(['prefix' => '/v1'], function () {
 	Route::put('customers/{id}','CustomerController@update');
 	// create new customers
 	Route::post('customers','CustomerController@store');
+	
+	// get list of technologies
+	Route::get('technologies','TechnologyController@index');
+	// get specific technologies
+	Route::get('technologies/{id}','TechnologyController@show');
+	// delete a technologies
+	Route::delete('technologies/{id}','TechnologyController@destroy');
+	// update existing technologies
+	Route::put('technologies/{id}','TechnologyController@update');
+	// create new technologies
+	Route::post('technologies','TechnologyController@store');
 });
