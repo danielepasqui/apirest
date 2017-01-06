@@ -6,7 +6,7 @@
 @section('menu')
 	<li class="active"><a href="#">Home</a></li>
 	<li><a href="/customers">Clienti</a></li>
-	<li><a href="#">Macchine</a></li>
+	<li><a href="/technologies">Tecnologie</a></li>
 @stop
 
 @section('main-content')

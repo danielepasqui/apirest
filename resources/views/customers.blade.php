@@ -6,7 +6,7 @@
 @section('menu')
 	<li><a href="/">Home</a></li>
 	<li class="active"><a href="#">Clienti</a></li>
-	<li><a href="#">Macchine</a></li>
+	<li><a href="/technologies">Tecnologie</a></li>
 @stop
 
 @section('main-content')
@@ -33,12 +33,25 @@
 				table.append('<tr><th>Nome</th><th>Coda support</th><th>Attivo</th><th>Note</th></tr>');
 				var row;
 				for(var key in data.customers) {
-					row = $("<tr><td>" + data.customers[key].name + "</td><td> " + data.customers[key].support_queue + "</td><td> " + (data.customers[key].active == 1 ? "Si" : "No") + '</td><td> ' + data.customers[key].notes + '</td></tr>');
+					row = $("<tr><td>" + data.customers[key].name + "</td><td> " + data.customers[key].support_queue + "</td><td> " + (data.customers[key].active == 1 ? "Si" : "No") + '</td><td> ' + data.customers[key].notes + '</td><td><button class="btn btn-lg btn-default glyphicon glyphicon-remove" id="delete" value="'+ data.customers[key].id +'"></button></td></tr>');
 					table.append(row);
 				}
 				$('#content').append(table);
 			  },
 			  type: 'GET'
+		   });
+		   $(document).on('click','#delete',function(){
+				$.ajax({
+				  url: '/api/v1/customers/'+$(this).val(),
+				  error: function() {
+					 $('#content').append('<p>An error has occurred</p>');
+				  },
+				  dataType: 'json',
+				  success: function(data) {
+					window.location.href = '/customers';
+				  },
+				  type: 'DELETE'
+			   });			  
 		   });
 		});
 	</script>

@@ -23,3 +23,9 @@ Route::get('/customers', function () {
 Route::get('/newcustomer', function () {
     return view('new_customer');
 });
+Route::get('/technologies', function () {
+    return view('technologies');
+});
+Route::get('/newtechnology', function () {
+    return view('new_technology');
+});
