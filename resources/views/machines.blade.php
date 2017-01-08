@@ -9,12 +9,13 @@
 	<li><a href="/technologies">Tecnologie</a></li>
 	<li class="active"><a href="#">Macchine</a></li>
 	<li><a href="/databases">Database</a></li>
+	<li><a href="/sites">Siti</a></li>
 @stop
 
 @section('main-content')
 	<h1 class="cover-heading">Macchine</h1>
 	<div class="lead">
-		<a href="/newmachine" class="btn btn-lg btn-default">Nuova Macchina</a>
+		<a href="/machine/add" class="btn btn-lg btn-default">Nuova Macchina</a>
 	</div>
 	<div class="lead">
 		<div class="table-content" id="content"></div>
@@ -35,7 +36,7 @@
 				table.append('<tr><th>Nome</th><th>Note</th></tr>');
 				var row;
 				for(var key in data.machines) {
-					row = $("<tr><td>" + data.machines[key].name + "</td><td>" + data.machines[key].notes + '</td><td><button class="btn btn-lg btn-default glyphicon glyphicon-remove" id="delete" value="'+ data.machines[key].id +'"></button></td></tr>');
+					row = $("<tr><td>" + data.machines[key].name + "</td><td>" + data.machines[key].notes + '</td><td><button class="btn btn-lg btn-default glyphicon glyphicon-remove" id="delete" value="'+ data.machines[key].id +'"></button></td><td><a href="/machine/'+ data.machines[key].id +'/edit" class="btn btn-lg btn-default glyphicon glyphicon-refresh" id="update"></a></td></tr>');
 					table.append(row);
 				}
 				$('#content').append(table);

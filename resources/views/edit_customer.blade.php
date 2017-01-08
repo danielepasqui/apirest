@@ -1,6 +1,6 @@
 @extends('default')
 @section('title')
-    <title>New customer</title>
+    <title>Edit customer</title>
 @stop
 
 @section('menu')
@@ -13,24 +13,42 @@
 @stop
 
 @section('main-content')
-	<h1 class="cover-heading">Nuovo Cliente</h1>
+	<h1 class="cover-heading">Modifica Cliente</h1>
 	<div class="lead">
+		<input type="hidden" id="id" value="{{ $id }}"><br/>
 		<input type="text" class="form-control custom_form" id="name" name="name" placeholder="Nome"><br/>
 		<input type="text" class="form-control custom_form" id="support_queue" name="support_queue" placeholder="Coda support"><br/>
 		<p>Attivo</p>
-		<input type="radio" name="active" value="1"/> Si
-		<input type="radio" name="active" value="0"/> No
+		<input type="radio" id="1" name="active" value="1"/> Si
+		<input type="radio" id="0" name="active" value="0"/> No
 		<textarea class="form-control" rows="5" id="notes" name="notes" placeholder="Note"></textarea><br/>
-		<button class="btn btn-lg btn-default" id="insert">Inserisci</button>
+		<button class="btn btn-lg btn-default" id="update">Modifica</button>
 	</div>
 @stop
 
 @section('script')
 	<script>
 		$(document).ready(function(){
-			$('#insert').click(function(){
+			$.ajax({
+			  url: '/api/v1/customers/'+$('#id').val(),
+			  error: function() {
+				 $('#content').append('<p>An error has occurred</p>');
+			  },
+			  dataType: 'json',
+			  success: function(data) {
+				$('#name').val(data.customer.name);
+				$('#support_queue').val(data.customer.support_queue);
+				if(data.customer.active==1)
+					$('#1').prop({"checked":true});
+				else
+					$('#0').prop({"checked":true});
+				$('#notes').val(data.customer.notes);
+			  },
+			type: 'GET'
+		   });
+			$('#update').click(function(){
 				$.ajax({
-				  url: '/api/v1/customers',
+				  url: '/api/v1/customers/'+$('#id').val(),
 				  error: function() {
 					 $('#content').append('<p>An error has occurred</p>');
 				  },
@@ -39,7 +57,7 @@
 				  success: function(data) {
 					window.location.href = '/customers';
 				  },
-				  type: 'POST'
+				  type: 'PUT'
 			   });
 			});
 		});

@@ -9,6 +9,7 @@
 	<li><a href="/technologies">Tecnologie</a></li>
 	<li class="active"><a href="/machines">Macchine</a></li>
 	<li><a href="/databases">Database</a></li>
+	<li><a href="/sites">Siti</a></li>
 @stop
 
 @section('main-content')

@@ -61,4 +61,15 @@ Route::group(['prefix' => '/v1'], function () {
 	Route::put('databases/{id}','DatabaseController@update');
 	// create new databases
 	Route::post('databases','DatabaseController@store');
+	
+	// get list of sites
+	Route::get('sites','SiteController@index');
+	// get specific sites
+	Route::get('sites/{id}','SiteController@show');
+	// delete a sites
+	Route::delete('sites/{id}','SiteController@destroy');
+	// update existing sites
+	Route::put('sites/{id}','SiteController@update');
+	// create new sites
+	Route::post('sites','SiteController@store');
 });

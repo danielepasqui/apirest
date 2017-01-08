@@ -16,3 +16,14 @@
 #cover_container{
 	margin-top: 10%;
 }
+.mastfoot{
+	position: initial;
+}
+.lead{
+	font-size: inherit;
+}
+@media (min-width: 992px){
+	div .masthead, .mastfoot, .cover-container {
+		width: 100%;
+	}
+}
