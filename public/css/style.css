@@ -9,6 +9,7 @@
 }
 #content{
 	margin-top: 5%;
+	overflow-x: scroll;
 }
 #main_div{
 	vertical-align: initial;
@@ -21,6 +22,11 @@
 }
 .lead{
 	font-size: inherit;
+}
+div.inner.cover{
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
 }
 @media (min-width: 992px){
 	div .masthead, .mastfoot, .cover-container {
