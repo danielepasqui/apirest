@@ -42,18 +42,28 @@
 			type: 'GET'
 		   });
 			$('#update').click(function(){
-				$.ajax({
-				  url: '/api/v1/databases/'+$('#id').val(),
-				  error: function() {
-					 $('#content').append('<p>An error has occurred</p>');
-				  },
-				  data: { host: $('#host').val(), username: $('#username').val(), password: $('#password').val(), db_name: $('#db_name').val()},
-				  dataType: 'json',
-				  success: function(data) {
-					window.location.href = '/databases';
-				  },
-				  type: 'PUT'
-			   });
+				$empty = false;
+				$('input').each(function() {
+				    if ($(this).val() == "")
+				    	$empty = true;
+				});
+				if($empty == true)
+					alert('Riempire tutti i campi');
+				else
+				{
+					$.ajax({
+					  url: '/api/v1/databases/'+$('#id').val(),
+					  error: function() {
+						 $('#content').append('<p>An error has occurred</p>');
+					  },
+					  data: { host: $('#host').val(), username: $('#username').val(), password: $('#password').val(), db_name: $('#db_name').val()},
+					  dataType: 'json',
+					  success: function(data) {
+						window.location.href = '/databases';
+					  },
+					  type: 'PUT'
+				   });
+				}
 			});
 		});
 	</script>

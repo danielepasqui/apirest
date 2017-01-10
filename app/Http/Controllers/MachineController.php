@@ -59,8 +59,10 @@ class MachineController extends Controller
 		$machine->name = $this->request->input('name');
 		$machine->notes = $this->request->input('notes');
 		$machine->save();
+		$url = '/machine/'.$machine->mid;
 		return response()->json([
-				'message' => 'machine updated'
+				'message' => 'machine updated',
+				'machine' => url($url)
 				], 200);
 	}
     public function store()  {
@@ -68,8 +70,10 @@ class MachineController extends Controller
 		$machine->name = $this->request->input('name');
 		$machine->notes = $this->request->input('notes');
 		$machine->save();
+		$url = '/machine/'.$machine->mid;
 		return response()->json([
-				'message' => 'machine added'
+				'message' => 'machine added',
+				'machine' => url($url)
 				], 201);
 	}
 }

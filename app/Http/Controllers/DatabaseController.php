@@ -65,8 +65,11 @@ class DatabaseController extends Controller
 		$database->password = $this->request->input('password');
 		$database->db_name = $this->request->input('db_name');
 		$database->save();
+
+		$url = '/database/'.$database->did;
 		return response()->json([
-				'message' => 'database updated'
+				'message' => 'database updated',
+				'database' => url($url)
 				], 200);
 	}
     public function store()  {
@@ -76,8 +79,11 @@ class DatabaseController extends Controller
 		$database->password = $this->request->input('password');
 		$database->db_name = $this->request->input('db_name');
 		$database->save();
+
+		$url = '/database/'.$database->did;
 		return response()->json([
-				'message' => 'database added'
+				'message' => 'database added',
+				'database' => url($url)
 				], 201);
 	}
 }

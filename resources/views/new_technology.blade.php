@@ -25,18 +25,28 @@
 	<script>
 		$(document).ready(function(){
 			$('#insert').click(function(){
-				$.ajax({
-				  url: '/api/v1/technologies',
-				  error: function() {
-					 $('#content').append('<p>An error has occurred</p>');
-				  },
-				  data: { name: $('#name').val(), notes: $('#notes').val()},
-				  dataType: 'json',
-				  success: function(data) {
-					window.location.href = '/technologies';
-				  },
-				  type: 'POST'
-			   });
+				$empty = false;
+				$('input').each(function() {
+				    if ($(this).val() == "")
+				    	$empty = true;
+				});
+				if($empty == true)
+					alert('Riempire tutti i campi (eccetto le note)');
+				else
+				{
+					$.ajax({
+					  url: '/api/v1/technologies',
+					  error: function() {
+						 $('#content').append('<p>An error has occurred</p>');
+					  },
+					  data: { name: $('#name').val(), notes: $('#notes').val()},
+					  dataType: 'json',
+					  success: function(data) {
+						window.location.href = '/technologies';
+					  },
+					  type: 'POST'
+				   });
+				}
 			});
 		});
 	</script>

@@ -47,18 +47,28 @@
 			type: 'GET'
 		   });
 			$('#update').click(function(){
-				$.ajax({
-				  url: '/api/v1/customers/'+$('#id').val(),
-				  error: function() {
-					 $('#content').append('<p>An error has occurred</p>');
-				  },
-				  data: { name: $('#name').val(), support_queue: $('#support_queue').val(), active: document.querySelector('input[name="active"]:checked').value, notes: $('#notes').val()},
-				  dataType: 'json',
-				  success: function(data) {
-					window.location.href = '/customers';
-				  },
-				  type: 'PUT'
-			   });
+				$empty = false;
+				$('input').each(function() {
+				    if ($(this).val() == "")
+				    	$empty = true;
+				});
+				if($empty == true)
+					alert('Riempire tutti i campi (eccetto le note)');
+				else
+				{
+					$.ajax({
+					  url: '/api/v1/customers/'+$('#id').val(),
+					  error: function() {
+						 $('#content').append('<p>An error has occurred</p>');
+					  },
+					  data: { name: $('#name').val(), support_queue: $('#support_queue').val(), active: document.querySelector('input[name="active"]:checked').value, notes: $('#notes').val()},
+					  dataType: 'json',
+					  success: function(data) {
+						window.location.href = '/customers';
+					  },
+					  type: 'PUT'
+				   });
+				}
 			});
 		});
 	</script>

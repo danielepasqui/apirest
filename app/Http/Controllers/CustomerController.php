@@ -66,8 +66,11 @@ class CustomerController extends Controller
 		$customer->active = $this->request->input('active');
 		$customer->notes = $this->request->input('notes');
 		$customer->save();
+
+		$url = '/customer/'.$customer->cid;
 		return response()->json([
-				'message' => 'customer updated'
+				'message' => 'customer updated',
+				'customer' => url($url)
 				], 200);
 	}
     public function store()  {
@@ -77,8 +80,11 @@ class CustomerController extends Controller
 		$customer->active = $this->request->input('active');
 		$customer->notes = $this->request->input('notes');
 		$customer->save();
+
+		$url = '/customer/'.$customer->cid;
 		return response()->json([
-				'message' => 'customer added'
+				'message' => 'customer added',
+				'customer' => url($url)
 				], 201);
 	}
 }

@@ -27,6 +27,7 @@
 		<textarea class="form-control" rows="5" id="notes" name="notes" placeholder="Note"></textarea><br/>
 		Tecnologia: <select class="form-control" id="technologies"></select><br/>
 		Macchina: <select class="form-control" id="machines"></select><br/>
+		Databases: <select multiple class="form-control" id="databases"></select><br/>
 		Cliente: <select class="form-control" id="customers"></select><br/>
 		<button class="btn btn-lg btn-default" id="insert">Inserisci</button>
 	</div>
@@ -35,6 +36,22 @@
 @section('script')
 	<script>
 		$(document).ready(function(){
+			$.ajax({
+			  url: '/api/v1/databases',
+			  error: function() {
+				 $('#content').append('<p>An error has occurred</p>');
+			  },
+			  dataType: 'json',
+			  success: function(data) {
+				var option;
+				for(var key in data.databases) {
+					option = $('<option value="'+ data.databases[key].id +'">'+ data.databases[key].db_name +'</option>');
+					$('#databases').append(option);
+				}
+			  },
+			  type: 'GET'
+		   	});
+			
 			$.ajax({
 			  url: '/api/v1/customers',
 			  error: function() {
@@ -81,30 +98,41 @@
 			  type: 'GET'
 		   });
 			$('#insert').click(function(){
-				$.ajax({
-				  url: '/api/v1/sites',
-				  error: function() {
-					 $('#content').append('<p>An error has occurred</p>');
-				  },
-				  data: { name: $('#nome').val(), 
-						  url: $('#url').val(), 
-						  doc_root: $('#doc_root').val(), 
-						  auth_name: $('#auth_name').val(), 
-						  auth_pass: $('#auth_pass').val(), 
-						  cms_admin: $('#cms_admin').val(),
-						  cms_pass: $('#cms_pass').val(),
-						  pm: $('#pm').val(),
-						  group: $('#group').val(),
-						  notes: $('#notes').val(),
-						  tid: $('#technologies').val(),
-						  mid: $('#machines').val(),
-						  cid: $('#customers').val()},
-				  dataType: 'json',
-				  success: function(data) {
-					window.location.href = '/sites';
-				  },
-				  type: 'POST'
-			   });
+				$empty = false;
+				$('input').each(function() {
+				    if ($(this).val() == "")
+				    	$empty = true;
+				});
+				if($empty == true)
+					alert('Riempire tutti i campi (eccetto le note)');
+				else
+				{
+					$.ajax({
+					  url: '/api/v1/sites',
+					  error: function() {
+						 $('#content').append('<p>An error has occurred</p>');
+					  },
+					  data: { name: $('#nome').val(), 
+							  url: $('#url').val(), 
+							  doc_root: $('#doc_root').val(), 
+							  auth_name: $('#auth_name').val(), 
+							  auth_pass: $('#auth_pass').val(), 
+							  cms_admin: $('#cms_admin').val(),
+							  cms_pass: $('#cms_pass').val(),
+							  pm: $('#pm').val(),
+							  group: $('#group').val(),
+							  notes: $('#notes').val(),
+							  tid: $('#technologies').val(),
+							  mid: $('#machines').val(),
+							  cid: $('#customers').val(),
+							  dids: $('#databases').val()},
+					  dataType: 'json',
+					  success: function(data) {
+						window.location.href = '/sites';
+					  },
+					  type: 'POST'
+				   });
+				}
 			});
 		});
 	</script>

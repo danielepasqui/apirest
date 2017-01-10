@@ -59,8 +59,11 @@ class TechnologyController extends Controller
 		$technology->name = $this->request->input('name');
 		$technology->notes = $this->request->input('notes');
 		$technology->save();
+
+		$url = '/technology/'.$technology->tid;
 		return response()->json([
-				'message' => 'technology updated'
+				'message' => 'technology updated',
+				'technology' => url($url)
 				], 200);
 	}
     public function store()  {
@@ -68,8 +71,11 @@ class TechnologyController extends Controller
 		$technology->name = $this->request->input('name');
 		$technology->notes = $this->request->input('notes');
 		$technology->save();
+
+		$url = '/technology/'.$technology->tid;
 		return response()->json([
-				'message' => 'technology added'
+				'message' => 'technology added',
+				'technology' => url($url)
 				], 201);
 	}
 }

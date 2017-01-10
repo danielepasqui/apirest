@@ -15,6 +15,7 @@
 @section('main-content')
 	<h1 class="cover-heading">Modifica Sito</h1>
 	<div class="lead">
+		<input type="hidden" id="id" value="{{ $id }}"><br/>
 		<input type="text" class="form-control custom_form" id="nome" name="nome" placeholder="Nome"><br/>
 		<input type="text" class="form-control custom_form" id="url" name="url" placeholder="Url"><br/>
 		<input type="text" class="form-control custom_form" id="doc_root" name="doc_root" placeholder="Document root"><br/>
@@ -27,14 +28,52 @@
 		<textarea class="form-control" rows="5" id="notes" name="notes" placeholder="Note"></textarea><br/>
 		Tecnologia: <select class="form-control" id="technologies"></select><br/>
 		Macchina: <select class="form-control" id="machines"></select><br/>
+		Databases: <select multiple class="form-control" id="databases"></select><br/>
 		Cliente: <select class="form-control" id="customers"></select><br/>
-		<button class="btn btn-lg btn-default" id="insert">Inserisci</button>
+		<button class="btn btn-lg btn-default" id="update">Modifica</button>
 	</div>
 @stop
 
 @section('script')
 	<script>
 		$(document).ready(function(){
+			$.ajax({
+			  url: '/api/v1/sites/'+$('#id').val(),
+			  error: function() {
+				 $('#content').append('<p>An error has occurred</p>');
+			  },
+			  dataType: 'json',
+			  success: function(data) {
+				$('#nome').val(data.site.nome);
+				$('#url').val(data.site.url);
+				$('#doc_root').val(data.site.doc_root);
+				$('#auth_name').val(data.site.auth_name);
+				$('#auth_pass').val(data.site.auth_pass);
+				$('#cms_admin').val(data.site.cms_admin);
+				$('#cms_pass').val(data.site.cms_pass);
+				$('#pm').val(data.site.pm);
+				$('#group').val(data.site.group);
+				$('#notes').val(data.site.notes);
+			  },
+			type: 'GET'
+		   });
+
+			$.ajax({
+			  url: '/api/v1/databases',
+			  error: function() {
+				 $('#content').append('<p>An error has occurred</p>');
+			  },
+			  dataType: 'json',
+			  success: function(data) {
+				var option;
+				for(var key in data.databases) {
+					option = $('<option value="'+ data.databases[key].id +'">'+ data.databases[key].db_name +'</option>');
+					$('#databases').append(option);
+				}
+			  },
+			  type: 'GET'
+		   	});
+
 			$.ajax({
 			  url: '/api/v1/customers',
 			  error: function() {
@@ -80,31 +119,42 @@
 			  },
 			  type: 'GET'
 		   });
-			$('#insert').click(function(){
-				$.ajax({
-				  url: '/api/v1/sites',
-				  error: function() {
-					 $('#content').append('<p>An error has occurred</p>');
-				  },
-				  data: { name: $('#nome').val(), 
-						  url: $('#url').val(), 
-						  doc_root: $('#doc_root').val(), 
-						  auth_name: $('#auth_name').val(), 
-						  auth_pass: $('#auth_pass').val(), 
-						  cms_admin: $('#cms_admin').val(),
-						  cms_pass: $('#cms_pass').val(),
-						  pm: $('#pm').val(),
-						  group: $('#group').val(),
-						  notes: $('#notes').val(),
-						  tid: $('#technologies').val(),
-						  mid: $('#machines').val(),
-						  cid: $('#customers').val()},
-				  dataType: 'json',
-				  success: function(data) {
-					window.location.href = '/sites';
-				  },
-				  type: 'POST'
-			   });
+			$('#update').click(function(){
+				$empty = false;
+				$('input').each(function() {
+				    if ($(this).val() == "")
+				    	$empty = true;
+				});
+				if($empty == true)
+					alert('Riempire tutti i campi (eccetto le note)');
+				else
+				{
+					$.ajax({
+					  url: '/api/v1/sites/'+$('#id').val(),
+					  error: function() {
+						 $('#content').append('<p>An error has occurred</p>');
+					  },
+					  data: { name: $('#nome').val(), 
+							  url: $('#url').val(), 
+							  doc_root: $('#doc_root').val(), 
+							  auth_name: $('#auth_name').val(), 
+							  auth_pass: $('#auth_pass').val(), 
+							  cms_admin: $('#cms_admin').val(),
+							  cms_pass: $('#cms_pass').val(),
+							  pm: $('#pm').val(),
+							  group: $('#group').val(),
+							  notes: $('#notes').val(),
+							  tid: $('#technologies').val(),
+							  mid: $('#machines').val(),
+							  cid: $('#customers').val(),
+							  dids: $('#databases').val()},
+					  dataType: 'json',
+					  success: function(data) {
+						window.location.href = '/sites';
+					  },
+					  type: 'PUT'
+				   });
+				}
 			});
 		});
 	</script>
