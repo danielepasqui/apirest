@@ -45,7 +45,7 @@
 			  success: function(data) {
 				var option;
 				for(var key in data.databases) {
-					option = $('<option value="'+ data.databases[key].id +'">'+ data.databases[key].db_name +'</option>');
+					option = $('<option value="'+ data.databases[key].did +'">'+ data.databases[key].db_name +'</option>');
 					$('#databases').append(option);
 				}
 			  },
@@ -61,7 +61,7 @@
 			  success: function(data) {
 				var option;
 				for(var key in data.customers) {
-					option = $('<option value="'+ data.customers[key].id +'">'+ data.customers[key].name +'</option>');
+					option = $('<option value="'+ data.customers[key].cid +'">'+ data.customers[key].name +'</option>');
 					$('#customers').append(option);
 				}
 			  },
@@ -76,7 +76,7 @@
 			  success: function(data) {
 				var option;
 				for(var key in data.technologies) {
-					option = $('<option value="'+ data.technologies[key].id +'">'+ data.technologies[key].name +'</option>');
+					option = $('<option value="'+ data.technologies[key].tid +'">'+ data.technologies[key].name +'</option>');
 					$('#technologies').append(option);
 				}
 			  },
@@ -91,7 +91,7 @@
 			  success: function(data) {
 				var option;
 				for(var key in data.machines) {
-					option = $('<option value="'+ data.machines[key].id +'">'+ data.machines[key].name +'</option>');
+					option = $('<option value="'+ data.machines[key].mid +'">'+ data.machines[key].name +'</option>');
 					$('#machines').append(option);
 				}
 			  },

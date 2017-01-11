@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Site;
 use App\Site_Database;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Contracts\Routing\ResponseFactory;
 
 class SiteController extends Controller
@@ -18,82 +19,26 @@ class SiteController extends Controller
 
      public function index()
     {
-		$sites = Site::all();
-		$response=array();
-		foreach ($sites as $site) {
-			$databases=array();
-			foreach($site->database as $db)
-			{
-				$databases[] = [
-					'host' => $db->host,
-					'username' => $db->username,
-					'password' => $db->password,
-					'db_name' => $db->db_name
-				];
-			}
-			$response[] = [
-					'id' => $site->sid,
-					'customer' => $site->customer->name,
-					'url' => $site->url,
-					'pm' => $site->pm,
-					'support_queue' => $site->customer->support_queue,
-					'technology' => $site->technology->name,
-					'machine' => $site->machine->name,
-					'doc_root' => $site->doc_root,
-					'group' => $site->group,
-					'cms_admin' => $site->cms_admin,
-					'cms_pass' => $site->cms_pass,
-					'auth_name' => $site->auth_name,
-					'auth_pass' => $site->auth_pass,
-					'databases' => $databases,
-					'notes' => $site->notes
-                ];
-		}
+		$sites = Site::with('customer','machine','technology','database')->get();
 		return response()->json([
-				'sites' => $response
+				'sites' => $sites
 				], 200);
     }
  
     public function show($id)
     {
-		$site = Site::find($id);
-		$response=array();
-		$databases=array();
-		foreach($site->database as $db)
-		{
-			$databases[] = [
-				'host' => $db->host,
-				'username' => $db->username,
-				'password' => $db->password,
-				'db_name' => $db->db_name
-			];
-		}
-		$response = [
-				'id' => $site->sid,
-				'nome' => $site->nome,
-				'url' => $site->url,
-				'pm' => $site->pm,
-				'support_queue' => $site->customer->support_queue,
-				'technology' => $site->technology->name,
-				'machine' => $site->machine->name,
-				'doc_root' => $site->doc_root,
-				'group' => $site->group,
-				'cms_admin' => $site->cms_admin,
-				'cms_pass' => $site->cms_pass,
-				'auth_name' => $site->auth_name,
-				'auth_pass' => $site->auth_pass,
-				'databases' => $databases,
-				'notes' => $site->notes
-			];
+		$site = Site::with('customer','machine','technology','database')->find($id);
 		return response()->json([
-				'site' => $response
+				'site' => $site
 				], 200);
     }
  
     public function destroy($id)
     {
-		$site = Site::find($id);
-		$site->delete();
+		Site::find($id)->delete();
+
+		Log::info('site '.$id.' deleted');
+
 		return response()->json([
 			'message' => 'site deleted'
 			], 200);
@@ -119,20 +64,15 @@ class SiteController extends Controller
 		$databases = $this->request->input('dids');
 
 		Site_Database::where('sid', $site->sid)->delete();
+		$site->database()->attach($databases);
+		
+		$url = route('sites.show', ['id' => $site->sid]);
 
-		if(is_array($databases)){
+		Log::info('site '.$site->sid.' updated');
 
-			foreach ($databases as $database) {
-				$site_database = new Site_Database;
-				$site_database->sid = $site->sid;
-				$site_database->did = $database;
-				$site_database->save();
-			}
-		}
-		$url = '/site/'.$site->sid;
 		return response()->json([
 				'message' => 'site updated',
-				'site' => url($url)
+				'site' => $url
 				], 200);
 	}
     public function store()  {
@@ -153,20 +93,15 @@ class SiteController extends Controller
 		$site->save();
 
 		$databases = $this->request->input('dids');
+		$site->database()->attach($databases);
 
-		if(is_array($databases)){
+		$url = route('sites.show', ['id' => $site->sid]);
 
-			foreach ($databases as $database) {
-				$site_database = new Site_Database;
-				$site_database->sid = $site->sid;
-				$site_database->did = $database;
-				$site_database->save();
-			}
-		}
-		$url = '/site/'.$site->sid;
+		Log::info('site '.$site->sid.' added');
+
 		return response()->json([
 				'message' => 'site added',
-				'site' => url($url)
+				'site' => $url
 				], 201);
 	}
 }

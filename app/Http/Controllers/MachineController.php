@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Machine;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Contracts\Routing\ResponseFactory;
 
 class MachineController extends Controller
@@ -18,37 +19,25 @@ class MachineController extends Controller
      public function index()
     {
 		$machines = Machine::all();
-		$response=array();
-		foreach ($machines as $machine) {
-			$response[] = [
-                    'id' => $machine->mid,
-                    'name' => $machine->name,
-					'notes' => $machine->notes
-                ];
-		}
 		return response()->json([
-				'machines' => $response
+				'machines' => $machines
 				], 200);
     }
  
     public function show($id)
     {
 		$machine = Machine::find($id);
-		$response=array();
-		$response = [
-				'id' => $machine->mid,
-				'name' => $machine->name,
-				'notes' => $machine->notes
-            ];
 		return response()->json([
-				'machine' => $response
+				'machine' => $machine
 				], 200);
     }
  
     public function destroy($id)
     {
-		$machine = Machine::find($id);
-		$machine->delete();
+		$machine = Machine::find($id)->delete();
+
+		Log::info('machine '.$id.' deleted');
+
 		return response()->json([
 			'message' => 'machine deleted'
 			], 200);
@@ -59,10 +48,14 @@ class MachineController extends Controller
 		$machine->name = $this->request->input('name');
 		$machine->notes = $this->request->input('notes');
 		$machine->save();
-		$url = '/machine/'.$machine->mid;
+
+		$url = route('machines.show', ['id' => $machine->mid]);
+
+		Log::info('machine '.$machine->mid.' updated');
+
 		return response()->json([
 				'message' => 'machine updated',
-				'machine' => url($url)
+				'machine' => $url
 				], 200);
 	}
     public function store()  {
@@ -70,10 +63,14 @@ class MachineController extends Controller
 		$machine->name = $this->request->input('name');
 		$machine->notes = $this->request->input('notes');
 		$machine->save();
-		$url = '/machine/'.$machine->mid;
+
+		$url = route('machines.show', ['id' => $machine->mid]);
+
+		Log::info('machine '.$machine->mid.' added');
+
 		return response()->json([
 				'message' => 'machine added',
-				'machine' => url($url)
+				'machine' => $url
 				], 201);
 	}
 }

@@ -36,7 +36,7 @@
 				table.append('<tr><th>Nome</th><th>Coda support</th><th>Attivo</th><th>Note</th></tr>');
 				var row;
 				for(var key in data.customers) {
-					row = $("<tr><td>" + data.customers[key].name + "</td><td> " + data.customers[key].support_queue + "</td><td> " + (data.customers[key].active == 1 ? "Si" : "No") + '</td><td> ' + data.customers[key].notes + '</td><td><button class="btn btn-lg btn-default glyphicon glyphicon-remove" id="delete" value="'+ data.customers[key].id +'"></button></td><td><a href="/customer/'+ data.customers[key].id +'/edit" class="btn btn-lg btn-default glyphicon glyphicon-refresh" id="update"></a></td></tr>');
+					row = $("<tr><td>" + data.customers[key].name + "</td><td> " + data.customers[key].support_queue + "</td><td> " + (data.customers[key].active == 1 ? "Si" : "No") + '</td><td> ' + data.customers[key].notes + '</td><td><button class="btn btn-lg btn-default glyphicon glyphicon-remove" id="delete" value="'+ data.customers[key].cid +'"></button></td><td><a href="/customer/'+ data.customers[key].cid +'/edit" class="btn btn-lg btn-default glyphicon glyphicon-refresh" id="update"></a></td></tr>');
 					table.append(row);
 				}
 				$('#content').append(table);

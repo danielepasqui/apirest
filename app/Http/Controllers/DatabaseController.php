@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Database;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Contracts\Routing\ResponseFactory;
 
 class DatabaseController extends Controller
@@ -18,41 +19,25 @@ class DatabaseController extends Controller
      public function index()
     {
 		$databases = Database::all();
-		$response=array();
-		foreach ($databases as $database) {
-			$response[] = [
-                    'id' => $database->did,
-                    'host' => $database->host,
-					'username' => $database->username,
-					'password' => $database->password,
-					'db_name' => $database->db_name
-                ];
-		}
 		return response()->json([
-				'databases' => $response
+				'databases' => $databases
 				], 200);
     }
  
     public function show($id)
     {
 		$database = Database::find($id);
-		$response=array();
-		$response = [
-				'id' => $database->did,
-				'host' => $database->host,
-				'username' => $database->username,
-				'password' => $database->password,
-				'db_name' => $database->db_name
-            ];
 		return response()->json([
-				'database' => $response
+				'database' => $database
 				], 200);
     }
  
     public function destroy($id)
     {
-		$database = Database::find($id);
-		$database->delete();
+		$database = Database::find($id)->delete();
+
+		Log::info('database '.$id.' deleted');
+
 		return response()->json([
 			'message' => 'database deleted'
 			], 200);
@@ -66,10 +51,13 @@ class DatabaseController extends Controller
 		$database->db_name = $this->request->input('db_name');
 		$database->save();
 
-		$url = '/database/'.$database->did;
+		$url = route('databases.show', ['id' => $database->did]);
+
+		Log::info('database '.$database->did.' updated');
+
 		return response()->json([
 				'message' => 'database updated',
-				'database' => url($url)
+				'database' => $url
 				], 200);
 	}
     public function store()  {
@@ -80,10 +68,13 @@ class DatabaseController extends Controller
 		$database->db_name = $this->request->input('db_name');
 		$database->save();
 
-		$url = '/database/'.$database->did;
+		$url = route('databases.show', ['id' => $database->did]);
+
+		Log::info('database '.$database->did.' added');
+
 		return response()->json([
 				'message' => 'database added',
-				'database' => url($url)
+				'database' => $url
 				], 201);
 	}
 }

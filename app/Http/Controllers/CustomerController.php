@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Customer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Contracts\Routing\ResponseFactory;
 
 class CustomerController extends Controller
@@ -19,41 +20,25 @@ class CustomerController extends Controller
      public function index()
     {
 		$customers = Customer::all();
-		$response=array();
-		foreach ($customers as $customer) {
-			$response[] = [
-                    'id' => $customer->cid,
-                    'name' => $customer->name,
-                    'support_queue' => $customer->support_queue,
-                    'active' => $customer->active,
-					'notes' => $customer->notes
-                ];
-		}
 		return response()->json([
-				'customers' => $response
+				'customers' => $customers
 				], 200);
     }
  
     public function show($id)
     {
 		$customer = Customer::find($id);
-		$response=array();
-		$response = [
-				'id' => $customer->cid,
-				'name' => $customer->name,
-				'support_queue' => $customer->support_queue,
-				'active' => $customer->active,
-				'notes' => $customer->notes
-            ];
 		return response()->json([
-				'customer' => $response
+				'customer' => $customer
 				], 200);
     }
  
     public function destroy($id)
     {
-		$customer = Customer::find($id);
-		$customer->delete();
+		$customer = Customer::find($id)->delete();
+
+		Log::info('Customer '.$id.' deleted');
+
 		return response()->json([
 			'message' => 'customer deleted'
 			], 200);
@@ -67,10 +52,13 @@ class CustomerController extends Controller
 		$customer->notes = $this->request->input('notes');
 		$customer->save();
 
-		$url = '/customer/'.$customer->cid;
+		$url = route('customers.show', ['id' => $customer->cid]);
+
+		Log::info('Customer '.$customer->cid.' updated');
+		
 		return response()->json([
 				'message' => 'customer updated',
-				'customer' => url($url)
+				'customer' => $url
 				], 200);
 	}
     public function store()  {
@@ -81,10 +69,13 @@ class CustomerController extends Controller
 		$customer->notes = $this->request->input('notes');
 		$customer->save();
 
-		$url = '/customer/'.$customer->cid;
+		$url = route('customers.show', ['id' => $customer->cid]);
+
+		Log::info('Customer '.$customer->cid.' added');
+
 		return response()->json([
 				'message' => 'customer added',
-				'customer' => url($url)
+				'customer' => $url
 				], 201);
 	}
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Technology;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Contracts\Routing\ResponseFactory;
 
 class TechnologyController extends Controller
@@ -18,37 +19,25 @@ class TechnologyController extends Controller
      public function index()
     {
 		$technologies = Technology::all();
-		$response=array();
-		foreach ($technologies as $technology) {
-			$response[] = [
-                    'id' => $technology->tid,
-                    'name' => $technology->name,
-					'notes' => $technology->notes
-                ];
-		}
 		return response()->json([
-				'technologies' => $response
+				'technologies' => $technologies
 				], 200);
     }
  
     public function show($id)
     {
 		$technology = Technology::find($id);
-		$response=array();
-		$response = [
-				'id' => $technology->tid,
-				'name' => $technology->name,
-				'notes' => $technology->notes
-            ];
 		return response()->json([
-				'technology' => $response
+				'technology' => $technology
 				], 200);
     }
  
     public function destroy($id)
     {
-		$technology = Technology::find($id);
-		$technology->delete();
+		$technology = Technology::find($id)->delete();
+
+		Log::info('Technology '.$id.' deleted');
+
 		return response()->json([
 			'message' => 'technology deleted'
 			], 200);
@@ -60,10 +49,12 @@ class TechnologyController extends Controller
 		$technology->notes = $this->request->input('notes');
 		$technology->save();
 
-		$url = '/technology/'.$technology->tid;
+		Log::info('Technology '.$technology->tid.' updated');
+
+		$url = route('technologies.show', ['id' => $technology->tid]);
 		return response()->json([
 				'message' => 'technology updated',
-				'technology' => url($url)
+				'technology' => $url
 				], 200);
 	}
     public function store()  {
@@ -72,10 +63,12 @@ class TechnologyController extends Controller
 		$technology->notes = $this->request->input('notes');
 		$technology->save();
 
-		$url = '/technology/'.$technology->tid;
+		Log::info('Technology '.$technology->tid.' added');
+
+		$url = route('technologies.show', ['id' => $technology->tid]);
 		return response()->json([
 				'message' => 'technology added',
-				'technology' => url($url)
+				'technology' => $url
 				], 201);
 	}
 }

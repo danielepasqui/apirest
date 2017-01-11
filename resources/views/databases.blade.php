@@ -36,7 +36,7 @@
 				table.append('<tr><th>Host</th><th>Username</th><th>Password</th><th>DB Name</th></tr>');
 				var row;
 				for(var key in data.databases) {
-					row = $("<tr><td>" + data.databases[key].host + "</td><td> " + data.databases[key].username + "</td><td> " + data.databases[key].password + '</td><td> ' + data.databases[key].db_name + '</td><td><button class="btn btn-lg btn-default glyphicon glyphicon-remove" id="delete" value="'+ data.databases[key].id +'"></button></td><td><a href="/database/'+ data.databases[key].id +'/edit" class="btn btn-lg btn-default glyphicon glyphicon-refresh" id="update"></a></td></tr>');
+					row = $("<tr><td>" + data.databases[key].host + "</td><td> " + data.databases[key].username + "</td><td> " + data.databases[key].password + '</td><td> ' + data.databases[key].db_name + '</td><td><button class="btn btn-lg btn-default glyphicon glyphicon-remove" id="delete" value="'+ data.databases[key].did +'"></button></td><td><a href="/database/'+ data.databases[key].did +'/edit" class="btn btn-lg btn-default glyphicon glyphicon-refresh" id="update"></a></td></tr>');
 					table.append(row);
 				}
 				$('#content').append(table);
