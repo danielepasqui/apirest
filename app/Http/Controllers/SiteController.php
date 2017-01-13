@@ -64,7 +64,8 @@ class SiteController extends Controller
 		$databases = $this->request->input('dids');
 
 		Site_Database::where('sid', $site->sid)->delete();
-		$site->database()->attach($databases);
+		if(!empty($databases))
+			$site->database()->attach($databases);
 		
 		$url = route('sites.show', ['id' => $site->sid]);
 
@@ -93,7 +94,8 @@ class SiteController extends Controller
 		$site->save();
 
 		$databases = $this->request->input('dids');
-		$site->database()->attach($databases);
+		if(!empty($databases))
+			$site->database()->attach($databases);
 
 		$url = route('sites.show', ['id' => $site->sid]);
 
