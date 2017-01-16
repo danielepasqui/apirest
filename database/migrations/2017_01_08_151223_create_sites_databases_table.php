@@ -8,8 +8,6 @@ class CreateSitesDatabasesTable extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up()
     {
@@ -20,15 +18,13 @@ class CreateSitesDatabasesTable extends Migration
             ->on('sites')->onDelete('cascade');
 
             $table->integer('database_id')->unsigned()->nullable();
-      	    $table->foreign('database_id')->references('id')
+            $table->foreign('database_id')->references('id')
             ->on('databases')->onDelete('cascade');
         });
     }
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down()
     {

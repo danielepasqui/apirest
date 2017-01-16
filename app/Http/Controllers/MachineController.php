@@ -55,7 +55,7 @@ class MachineController extends Controller
                 'machine' => $url,
                 ], 200);
     }
-    
+
     public function store(Machine $Machine)
     {
         $machine = new $Machine();

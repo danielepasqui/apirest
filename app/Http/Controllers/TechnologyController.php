@@ -55,7 +55,7 @@ class TechnologyController extends Controller
                 'technology' => $url,
                 ], 200);
     }
-    
+
     public function store(Technology $Technology)
     {
         $technology = new $Technology();

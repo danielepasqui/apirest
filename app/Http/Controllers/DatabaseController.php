@@ -55,7 +55,7 @@ class DatabaseController extends Controller
                 'database' => $url,
                 ], 200);
     }
-    
+
     public function store(Database $Database)
     {
         $database = new $Database();

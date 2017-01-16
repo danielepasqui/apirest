@@ -6,6 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Site_Database extends Model
 {
-	protected $table = 'sites_databases';
+    protected $table = 'sites_databases';
     public $timestamps = false;
 }

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Request\StoreSites;
 use App\Site;
 use App\Site_Database;
 use Illuminate\Http\Request;

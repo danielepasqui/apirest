@@ -55,7 +55,7 @@ class CustomerController extends Controller
                 'customer' => $url,
                 ], 200);
     }
-    
+
     public function store(Customer $Customer)
     {
         $customer = new $Customer();
