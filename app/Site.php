@@ -6,15 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Site extends Model
 {
-    protected $primaryKey = 'sid';
     public $timestamps = false;
+    protected $fillable = ['name', 'url', 'doc_root', 'auth_name', 'auth_pass', 'cms_admin', 'cms_pass', 'pm', 'group', 'notes', 'technology_id', 'machine_id', 'customer_id'];
 	
 	/**
 	 * Get the machine of the sites.
 	 */
 	public function machine()
 	{
-		return $this->belongsTo('App\Machine', 'mid');
+		return $this->belongsTo('App\Machine');
 	}
 	
 	/**
@@ -22,7 +22,7 @@ class Site extends Model
 	 */
 	public function customer()
 	{
-		return $this->belongsTo('App\Customer', 'cid');
+		return $this->belongsTo('App\Customer');
 	}
 	
 	/**
@@ -30,7 +30,7 @@ class Site extends Model
 	 */
 	public function technology()
 	{
-		return $this->belongsTo('App\Technology', 'tid');
+		return $this->belongsTo('App\Technology');
 	}
 	
 	 /**
@@ -38,6 +38,6 @@ class Site extends Model
      */
     public function database()
     {
-        return $this->belongsToMany('App\Database', 'sites_databases', 'sid', 'did');
+        return $this->belongsToMany('App\Database', 'sites_databases', 'site_id', 'database_id');
     }
 }

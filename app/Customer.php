@@ -6,6 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Customer extends Model
 {
-	protected $primaryKey = 'cid';
     public $timestamps = false;
+    protected $fillable = ['name', 'support_queue' , 'active' , 'notes'];
 }

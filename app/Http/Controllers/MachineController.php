@@ -5,72 +5,67 @@ namespace App\Http\Controllers;
 use App\Machine;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Contracts\Routing\ResponseFactory;
 
 class MachineController extends Controller
 {
     protected $request;
-	
-	public function __construct(Request $request)
+
+    public function __construct(Request $request)
     {
         $this->request = $request;
     }
 
-     public function index()
+    public function index(Machine $Machine)
     {
-		$machines = Machine::all();
-		return response()->json([
-				'machines' => $machines
-				], 200);
+        $machines = $Machine->all();
+
+        return response()->json([
+                'machines' => $machines,
+                ], 200);
     }
- 
-    public function show($id)
+
+    public function show($id, Machine $Machine)
     {
-		$machine = Machine::find($id);
-		return response()->json([
-				'machine' => $machine
-				], 200);
+        $machine = $Machine->find($id);
+
+        return response()->json([
+                'machine' => $machine,
+                ], 200);
     }
- 
-    public function destroy($id)
+
+    public function destroy($id, Machine $Machine)
     {
-		$machine = Machine::find($id)->delete();
+        $Machine->destroy($id);
+        Log::info('machine '.$id.' deleted');
 
-		Log::info('machine '.$id.' deleted');
-
-		return response()->json([
-			'message' => 'machine deleted'
-			], 200);
+        return response()->json([
+            'message' => 'machine deleted',
+            ], 200);
     }
- 
-	public function update($id){
-		$machine = Machine::find($id);
-		$machine->name = $this->request->input('name');
-		$machine->notes = $this->request->input('notes');
-		$machine->save();
 
-		$url = route('machines.show', ['id' => $machine->mid]);
+    public function update($id, Machine $Machine)
+    {
+        $machine = $Machine->find($id);
+        $machine->update($this->request->all());
+        $url = route('machines.show', ['id' => $machine->id]);
+        Log::info('machine '.$machine->id.' updated');
 
-		Log::info('machine '.$machine->mid.' updated');
+        return response()->json([
+                'message' => 'machine updated',
+                'machine' => $url,
+                ], 200);
+    }
+    
+    public function store(Machine $Machine)
+    {
+        $machine = new $Machine();
+        $id = $machine->create($this->request->all())->id;
+        $url = route('machines.show', ['id' => $id]);
+        Log::info('machine '.$id.' added');
 
-		return response()->json([
-				'message' => 'machine updated',
-				'machine' => $url
-				], 200);
-	}
-    public function store()  {
-		$machine = new Machine;
-		$machine->name = $this->request->input('name');
-		$machine->notes = $this->request->input('notes');
-		$machine->save();
-
-		$url = route('machines.show', ['id' => $machine->mid]);
-
-		Log::info('machine '.$machine->mid.' added');
-
-		return response()->json([
-				'message' => 'machine added',
-				'machine' => $url
-				], 201);
-	}
+        return response()->json([
+                'message' => 'machine added',
+                'machine' => $url,
+                ], 201);
+    }
 }

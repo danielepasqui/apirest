@@ -6,6 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Database extends Model
 {
-    protected $primaryKey = 'did';
     public $timestamps = false;
+    protected $fillable = ['host', 'username' , 'password' , 'db_name'];
 }

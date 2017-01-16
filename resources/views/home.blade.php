@@ -14,5 +14,4 @@
 
 @section('main-content')
 	<h1 class="cover-heading">Home Page</h1>
-	<p class="lead"></p>
 @stop

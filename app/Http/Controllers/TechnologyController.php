@@ -5,70 +5,67 @@ namespace App\Http\Controllers;
 use App\Technology;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Contracts\Routing\ResponseFactory;
 
 class TechnologyController extends Controller
 {
     protected $request;
-	
-	public function __construct(Request $request)
+
+    public function __construct(Request $request)
     {
         $this->request = $request;
     }
 
-     public function index()
+    public function index(Technology $Technology)
     {
-		$technologies = Technology::all();
-		return response()->json([
-				'technologies' => $technologies
-				], 200);
+        $technologies = $Technology->all();
+
+        return response()->json([
+                'technologies' => $technologies,
+                ], 200);
     }
- 
-    public function show($id)
+
+    public function show($id, Technology $Technology)
     {
-		$technology = Technology::find($id);
-		return response()->json([
-				'technology' => $technology
-				], 200);
+        $technology = $Technology->find($id);
+
+        return response()->json([
+                'technology' => $technology,
+                ], 200);
     }
- 
-    public function destroy($id)
+
+    public function destroy($id, Technology $Technology)
     {
-		$technology = Technology::find($id)->delete();
+        $Technology->destroy($id);
+        Log::info('Technology '.$id.' deleted');
 
-		Log::info('Technology '.$id.' deleted');
-
-		return response()->json([
-			'message' => 'technology deleted'
-			], 200);
+        return response()->json([
+            'message' => 'technology deleted',
+            ], 200);
     }
- 
-	public function update($id){
-		$technology = Technology::find($id);
-		$technology->name = $this->request->input('name');
-		$technology->notes = $this->request->input('notes');
-		$technology->save();
 
-		Log::info('Technology '.$technology->tid.' updated');
+    public function update($id, Technology $Technology)
+    {
+        $technology = $Technology->find($id);
+        $technology->update($this->request->all());
+        Log::info('Technology '.$technology->id.' updated');
+        $url = route('technologies.show', ['id' => $technology->id]);
 
-		$url = route('technologies.show', ['id' => $technology->tid]);
-		return response()->json([
-				'message' => 'technology updated',
-				'technology' => $url
-				], 200);
-	}
-    public function store()  {
-		$technology = new Technology;
-		$technology->name = $this->request->input('name');
-		$technology->notes = $this->request->input('notes');
-		$technology->save();
+        return response()->json([
+                'message' => 'technology updated',
+                'technology' => $url,
+                ], 200);
+    }
+    
+    public function store(Technology $Technology)
+    {
+        $technology = new $Technology();
+        $id = $technology->create($this->request->all())->id;
+        Log::info('Technology '.$id.' added');
+        $url = route('technologies.show', ['id' => $id]);
 
-		Log::info('Technology '.$technology->tid.' added');
-
-		$url = route('technologies.show', ['id' => $technology->tid]);
-		return response()->json([
-				'message' => 'technology added',
-				'technology' => $url
-				], 201);
-	}
+        return response()->json([
+                'message' => 'technology added',
+                'technology' => $url,
+                ], 201);
+    }
 }

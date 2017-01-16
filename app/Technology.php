@@ -6,6 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Technology extends Model
 {
-    protected $primaryKey = 'tid';
     public $timestamps = false;
+    protected $fillable = ['name', 'notes'];
 }

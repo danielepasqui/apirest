@@ -39,14 +39,14 @@
 				var row;
 				for(var key in data.sites) {
 					row = $("<tr><td>" + data.sites[key].customer.name + "</td><td> " + data.sites[key].url + "</td><td> " + data.sites[key].pm + "</td><td> " + data.sites[key].customer.support_queue + '</td><td> ' + data.sites[key].technology.name + '</td><td> ' + data.sites[key].machine.name + '</td><td> ' + data.sites[key].doc_root + '</td><td> ' + data.sites[key].group + '</td><td> ' + data.sites[key].cms_admin + '</td><td> ' + data.sites[key].cms_pass + '</td><td> ' + data.sites[key].auth_name + '</td><td> ' + data.sites[key].auth_pass + '</td>');
-					row.append('<td id="db_host'+data.sites[key].sid+'"></td><td id="db_user'+data.sites[key].sid+'"></td><td id="db_pass'+data.sites[key].sid+'"></td><td id="db_name'+data.sites[key].sid+'"></td>');
-					row.append('<td>' + data.sites[key].notes + '</td><td><button class="btn btn-lg btn-default glyphicon glyphicon-remove" id="delete" value="'+ data.sites[key].sid +'"></button></td><td><a href="/site/'+ data.sites[key].sid +'/edit" class="btn btn-lg btn-default glyphicon glyphicon-refresh" id="update"></a></td></tr>');
+					row.append('<td id="db_host'+data.sites[key].id+'"></td><td id="db_user'+data.sites[key].id+'"></td><td id="db_pass'+data.sites[key].id+'"></td><td id="db_name'+data.sites[key].id+'"></td>');
+					row.append('<td>' + data.sites[key].notes + '</td><td><button class="btn btn-lg btn-default glyphicon glyphicon-remove" id="delete" value="'+ data.sites[key].id +'"></button></td><td><a href="/site/'+ data.sites[key].id +'/edit" class="btn btn-lg btn-default glyphicon glyphicon-refresh" id="update"></a></td></tr>');
 					$('#table').append(row);
 					for(var chiave in data.sites[key].database) {
-						$('#db_host'+data.sites[key].sid).append(data.sites[key].database[chiave].host + '<br/>');
-						$('#db_user'+data.sites[key].sid).append(data.sites[key].database[chiave].username + '<br/>');
-						$('#db_pass'+data.sites[key].sid).append(data.sites[key].database[chiave].password + '<br/>');
-						$('#db_name'+data.sites[key].sid).append(data.sites[key].database[chiave].db_name + '<br/>');
+						$('#db_host'+data.sites[key].id).append(data.sites[key].database[chiave].host + '<br/>');
+						$('#db_user'+data.sites[key].id).append(data.sites[key].database[chiave].username + '<br/>');
+						$('#db_pass'+data.sites[key].id).append(data.sites[key].database[chiave].password + '<br/>');
+						$('#db_name'+data.sites[key].id).append(data.sites[key].database[chiave].db_name + '<br/>');
 					}
 				}
 			  },

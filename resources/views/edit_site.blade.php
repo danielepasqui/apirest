@@ -44,7 +44,7 @@
 			  },
 			  dataType: 'json',
 			  success: function(data) {
-				$('#nome').val(data.site.nome);
+				$('#nome').val(data.site.name);
 				$('#url').val(data.site.url);
 				$('#doc_root').val(data.site.doc_root);
 				$('#auth_name').val(data.site.auth_name);
@@ -67,7 +67,7 @@
 			  success: function(data) {
 				var option;
 				for(var key in data.databases) {
-					option = $('<option value="'+ data.databases[key].did +'">'+ data.databases[key].db_name +'</option>');
+					option = $('<option value="'+ data.databases[key].id +'">'+ data.databases[key].db_name +'</option>');
 					$('#databases').append(option);
 				}
 			  },
@@ -83,7 +83,7 @@
 			  success: function(data) {
 				var option;
 				for(var key in data.customers) {
-					option = $('<option value="'+ data.customers[key].cid +'">'+ data.customers[key].name +'</option>');
+					option = $('<option value="'+ data.customers[key].id +'">'+ data.customers[key].name +'</option>');
 					$('#customers').append(option);
 				}
 			  },
@@ -98,7 +98,7 @@
 			  success: function(data) {
 				var option;
 				for(var key in data.technologies) {
-					option = $('<option value="'+ data.technologies[key].tid +'">'+ data.technologies[key].name +'</option>');
+					option = $('<option value="'+ data.technologies[key].id +'">'+ data.technologies[key].name +'</option>');
 					$('#technologies').append(option);
 				}
 			  },
@@ -113,7 +113,7 @@
 			  success: function(data) {
 				var option;
 				for(var key in data.machines) {
-					option = $('<option value="'+ data.machines[key].mid +'">'+ data.machines[key].name +'</option>');
+					option = $('<option value="'+ data.machines[key].id +'">'+ data.machines[key].name +'</option>');
 					$('#machines').append(option);
 				}
 			  },
@@ -122,8 +122,11 @@
 			$('#update').click(function(){
 				$empty = false;
 				$('input').each(function() {
-				    if ($(this).val() == "")
-				    	$empty = true;
+				    if(!$(this).attr('id') == 'auth_name' && !$(this).attr('id') == 'auth_pass')
+					{
+				    	if ($(this).val() == "")
+				    		$empty = true;
+				    }
 				});
 				if($empty == true)
 					alert('Riempire tutti i campi (eccetto le note)');
@@ -144,9 +147,9 @@
 							  pm: $('#pm').val(),
 							  group: $('#group').val(),
 							  notes: $('#notes').val(),
-							  tid: $('#technologies').val(),
-							  mid: $('#machines').val(),
-							  cid: $('#customers').val(),
+							  technology_id: $('#technologies').val(),
+							  machine_id: $('#machines').val(),
+							  customer_id: $('#customers').val(),
 							  dids: $('#databases').val()},
 					  dataType: 'json',
 					  success: function(data) {

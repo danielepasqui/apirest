@@ -15,12 +15,12 @@ class CreateSitesDatabasesTable extends Migration
     {
         Schema::create('sites_databases', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('sid')->unsigned()->nullable();
-            $table->foreign('sid')->references('sid')
+            $table->integer('site_id')->unsigned()->nullable();
+            $table->foreign('site_id')->references('id')
             ->on('sites')->onDelete('cascade');
 
-            $table->integer('did')->unsigned()->nullable();
-      	    $table->foreign('did')->references('did')
+            $table->integer('database_id')->unsigned()->nullable();
+      	    $table->foreign('database_id')->references('id')
             ->on('databases')->onDelete('cascade');
         });
     }

@@ -14,7 +14,7 @@ class CreateDatabasesTable extends Migration
     public function up()
     {
         Schema::create('databases', function (Blueprint $table) {
-            $table->increments('did');
+            $table->increments('id');
             $table->string('host');
             $table->string('username');
             $table->string('password');

@@ -6,6 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Machine extends Model
 {
-    protected $primaryKey = 'mid';
     public $timestamps = false;
+    protected $fillable = ['name', 'notes'];
 }

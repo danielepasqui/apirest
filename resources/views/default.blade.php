@@ -46,14 +46,14 @@
               <h3 class="masthead-brand">Siti Web</h3>
               <nav>
                 <ul class="nav masthead-nav">
-				  @yield('menu')
+				          @yield('menu')
                 </ul>
               </nav>
             </div>
           </div>
 
           <div class="inner cover">
-			@yield('main-content')
+			      @yield('main-content')
           </div>
 
           <div class="mastfoot">
@@ -76,6 +76,6 @@
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="{{ asset('js/ie10-viewport-bug-workaround.js') }}"></script>
-	@yield('script')
+	   @yield('script')
   </body>
 </html>

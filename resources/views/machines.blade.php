@@ -36,7 +36,7 @@
 				table.append('<tr><th>Nome</th><th>Note</th></tr>');
 				var row;
 				for(var key in data.machines) {
-					row = $("<tr><td>" + data.machines[key].name + "</td><td>" + data.machines[key].notes + '</td><td><button class="btn btn-lg btn-default glyphicon glyphicon-remove" id="delete" value="'+ data.machines[key].mid +'"></button></td><td><a href="/machine/'+ data.machines[key].mid +'/edit" class="btn btn-lg btn-default glyphicon glyphicon-refresh" id="update"></a></td></tr>');
+					row = $("<tr><td>" + data.machines[key].name + "</td><td>" + data.machines[key].notes + '</td><td><button class="btn btn-lg btn-default glyphicon glyphicon-remove" id="delete" value="'+ data.machines[key].id +'"></button></td><td><a href="/machine/'+ data.machines[key].id +'/edit" class="btn btn-lg btn-default glyphicon glyphicon-refresh" id="update"></a></td></tr>');
 					table.append(row);
 				}
 				$('#content').append(table);

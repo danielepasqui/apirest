@@ -14,8 +14,8 @@ class CreateSitesTable extends Migration
     public function up()
     {
         Schema::create('sites', function (Blueprint $table) {
-            $table->increments('sid');
-            $table->string('nome');
+            $table->increments('id');
+            $table->string('name');
             $table->string('url');
             $table->string('doc_root');
             $table->string('auth_name');
@@ -25,12 +25,12 @@ class CreateSitesTable extends Migration
             $table->string('pm');
             $table->string('group');
             $table->longText('notes')->nullable();
-            $table->integer('tid')->unsigned();
-            $table->integer('mid')->unsigned();
-            $table->integer('cid')->unsigned();
-            $table->foreign('tid')->references('tid')->on('technologies');
-            $table->foreign('mid')->references('mid')->on('machines');
-            $table->foreign('cid')->references('cid')->on('customers');
+            $table->integer('technology_id')->unsigned()->nullable();
+            $table->integer('machine_id')->unsigned()->nullable();
+            $table->integer('customer_id')->unsigned()->nullable();
+            $table->foreign('technology_id')->references('id')->on('technologies')->onDelete('set null');
+            $table->foreign('machine_id')->references('id')->on('machines')->onDelete('set null');
+            $table->foreign('customer_id')->references('id')->on('customers')->onDelete('set null');
         });
     }
 
