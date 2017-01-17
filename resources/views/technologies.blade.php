@@ -44,17 +44,19 @@
 			  type: 'GET'
 		   });
 		   $(document).on('click','#delete',function(){
-				$.ajax({
-				  url: '/api/v1/technologies/'+$(this).val(),
-				  error: function() {
-					 $('#content').append('<p>An error has occurred</p>');
-				  },
-				  dataType: 'json',
-				  success: function(data) {
-					window.location.href = '/technologies';
-				  },
-				  type: 'DELETE'
-			   });			  
+		   		if(confirm('Sei sicuro?')) {
+					$.ajax({
+					  url: '/api/v1/technologies/'+$(this).val(),
+					  error: function() {
+						 $('#content').append('<p>An error has occurred</p>');
+					  },
+					  dataType: 'json',
+					  success: function(data) {
+						window.location.href = '/technologies';
+					  },
+					  type: 'DELETE'
+				   });
+				}		  
 		   });
 		});
 	</script>

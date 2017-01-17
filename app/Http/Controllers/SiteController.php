@@ -68,16 +68,15 @@ class SiteController extends Controller
     public function store(Site $Site)
     {
         $site = new $Site();
-        $id = $site->create($this->request->all())->id;
+        $site = $site->create($this->request->all());
         $databases = $this->request->input('dids');
-        $site = $site->find($id);
 
         if (!empty($databases)) {
             $site->database()->attach($databases);
         }
 
-        $url = route('sites.show', ['id' => $id]);
-        Log::info('site '.$id.' added');
+        $url = route('sites.show', ['id' => $site->id]);
+        Log::info('site '.$site->id.' added');
 
         return response()->json([
                 'message' => 'site added',

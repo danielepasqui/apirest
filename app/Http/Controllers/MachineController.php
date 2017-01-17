@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Machine;
+use App\Http\Requests\StoreMachine;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -43,7 +44,7 @@ class MachineController extends Controller
             ], 200);
     }
 
-    public function update($id, Machine $Machine)
+    public function update($id, Machine $Machine, StoreMachine $request)
     {
         $machine = $Machine->find($id);
         $machine->update($this->request->all());
@@ -56,7 +57,7 @@ class MachineController extends Controller
                 ], 200);
     }
 
-    public function store(Machine $Machine)
+    public function store(Machine $Machine, StoreMachine $request)
     {
         $machine = new $Machine();
         $id = $machine->create($this->request->all())->id;

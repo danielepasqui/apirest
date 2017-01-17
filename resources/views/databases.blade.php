@@ -44,17 +44,19 @@
 			  type: 'GET'
 		   });
 		   $(document).on('click','#delete',function(){
-				$.ajax({
-				  url: '/api/v1/databases/'+$(this).val(),
-				  error: function() {
-					 $('#content').append('<p>An error has occurred</p>');
-				  },
-				  dataType: 'json',
-				  success: function(data) {
-					window.location.href = '/databases';
-				  },
-				  type: 'DELETE'
-			   });			  
+				if(confirm('Sei sicuro?')) {
+					$.ajax({
+					  url: '/api/v1/databases/'+$(this).val(),
+					  error: function() {
+						 $('#content').append('<p>An error has occurred</p>');
+					  },
+					  dataType: 'json',
+					  success: function(data) {
+						window.location.href = '/databases';
+					  },
+					  type: 'DELETE'
+				   });
+				}
 		   });
 		});
 	</script>

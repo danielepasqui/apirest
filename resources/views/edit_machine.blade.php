@@ -38,28 +38,24 @@
 			type: 'GET'
 		   });
 			$('#update').click(function(){
-				$empty = false;
-				$('input').each(function() {
-				    if ($(this).val() == "")
-				    	$empty = true;
-				});
-				if($empty == true)
-					alert('Riempire tutti i campi (eccetto le note)');
-				else
-				{
-					$.ajax({
-					  url: '/api/v1/machines/'+$('#id').val(),
-					  error: function() {
-						 $('#content').append('<p>An error has occurred</p>');
-					  },
-					  data: { name: $('#name').val(), notes: $('#notes').val()},
-					  dataType: 'json',
-					  success: function(data) {
-						window.location.href = '/machines';
-					  },
-					  type: 'PUT'
-				   });
-				}
+				$.ajax({
+				  url: '/api/v1/machines/'+$('#id').val(),
+				  error: function(data) {
+ 				  	if(data.status == 422) {
+				  	 	for(var key in data.responseJSON.name) {
+					 		alert(data.responseJSON.name[key]);
+				  	 	}
+					} else {
+					 	alert('Errore, riprovare più tardi');
+					}
+				  },
+				  data: { name: $('#name').val(), notes: $('#notes').val()},
+				  dataType: 'json',
+				  success: function(data) {
+					window.location.href = '/machines';
+				  },
+				  type: 'PUT'
+			   });
 			});
 		});
 	</script>

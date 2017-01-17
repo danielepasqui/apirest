@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Technology;
+use App\Http\Requests\StoreTechnology;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -43,7 +44,7 @@ class TechnologyController extends Controller
             ], 200);
     }
 
-    public function update($id, Technology $Technology)
+    public function update($id, Technology $Technology, StoreTechnology $request)
     {
         $technology = $Technology->find($id);
         $technology->update($this->request->all());
@@ -56,7 +57,7 @@ class TechnologyController extends Controller
                 ], 200);
     }
 
-    public function store(Technology $Technology)
+    public function store(Technology $Technology, StoreTechnology $request)
     {
         $technology = new $Technology();
         $id = $technology->create($this->request->all())->id;

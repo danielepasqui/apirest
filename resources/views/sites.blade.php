@@ -38,7 +38,7 @@
 			  success: function(data) {
 				var row;
 				for(var key in data.sites) {
-					row = $("<tr><td>" + data.sites[key].customer.name + "</td><td> " + data.sites[key].url + "</td><td> " + data.sites[key].pm + "</td><td> " + data.sites[key].customer.support_queue + '</td><td> ' + data.sites[key].technology.name + '</td><td> ' + data.sites[key].machine.name + '</td><td> ' + data.sites[key].doc_root + '</td><td> ' + data.sites[key].group + '</td><td> ' + data.sites[key].cms_admin + '</td><td> ' + data.sites[key].cms_pass + '</td><td> ' + data.sites[key].auth_name + '</td><td> ' + data.sites[key].auth_pass + '</td>');
+					row = $("<tr><td>" + (data.sites[key].customer == null ? "" : data.sites[key].customer.name) + "</td><td> " + data.sites[key].url + "</td><td> " + data.sites[key].pm + "</td><td> " + (data.sites[key].customer == null ? "" : data.sites[key].customer.support_queue) + '</td><td> ' + (data.sites[key].technology == null ? "" : data.sites[key].technology.name) + '</td><td> ' + (data.sites[key].machine == null ? "" : data.sites[key].machine.name) + '</td><td> ' + data.sites[key].doc_root + '</td><td> ' + data.sites[key].group + '</td><td> ' + data.sites[key].cms_admin + '</td><td> ' + data.sites[key].cms_pass + '</td><td> ' + data.sites[key].auth_name + '</td><td> ' + data.sites[key].auth_pass + '</td>');
 					row.append('<td id="db_host'+data.sites[key].id+'"></td><td id="db_user'+data.sites[key].id+'"></td><td id="db_pass'+data.sites[key].id+'"></td><td id="db_name'+data.sites[key].id+'"></td>');
 					row.append('<td>' + data.sites[key].notes + '</td><td><button class="btn btn-lg btn-default glyphicon glyphicon-remove" id="delete" value="'+ data.sites[key].id +'"></button></td><td><a href="/site/'+ data.sites[key].id +'/edit" class="btn btn-lg btn-default glyphicon glyphicon-refresh" id="update"></a></td></tr>');
 					$('#table').append(row);
@@ -53,17 +53,19 @@
 			  type: 'GET'
 		   });
 		   $(document).on('click','#delete',function(){
-				$.ajax({
-				  url: '/api/v1/sites/'+$(this).val(),
-				  error: function() {
-					 $('#content').append('<p>An error has occurred</p>');
-				  },
-				  dataType: 'json',
-				  success: function(data) {
-					window.location.href = '/sites';
-				  },
-				  type: 'DELETE'
-			   });			  
+			   	if(confirm('Sei sicuro?')) {
+					$.ajax({
+					  url: '/api/v1/sites/'+$(this).val(),
+					  error: function() {
+						 $('#content').append('<p>An error has occurred</p>');
+					  },
+					  dataType: 'json',
+					  success: function(data) {
+						window.location.href = '/sites';
+					  },
+					  type: 'DELETE'
+				   });		
+				}	  
 		   });
 		});
 	</script>
