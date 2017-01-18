@@ -60,9 +60,9 @@ class TechnologyController extends Controller
     public function store(Technology $Technology, StoreTechnology $request)
     {
         $technology = new $Technology();
-        $id = $technology->create($this->request->all())->id;
-        Log::info('Technology '.$id.' added');
-        $url = route('technologies.show', ['id' => $id]);
+        $technology = $technology->create($this->request->all());
+        Log::info('Technology '.$technology->id.' added');
+        $url = route('technologies.show', ['id' => $technology->id]);
 
         return response()->json([
                 'message' => 'technology added',

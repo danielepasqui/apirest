@@ -59,9 +59,9 @@ class DatabaseController extends Controller
     public function store(Database $Database)
     {
         $database = new $Database();
-        $id = $database->create($this->request->all())->id;
-        $url = route('databases.show', ['id' => $id]);
-        Log::info('database '.$id.' added');
+        $database = $database->create($this->request->all());
+        $url = route('databases.show', ['id' => $database->id]);
+        Log::info('database '.$database->id.' added');
 
         return response()->json([
                 'message' => 'database added',

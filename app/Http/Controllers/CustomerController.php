@@ -59,9 +59,9 @@ class CustomerController extends Controller
     public function store(Customer $Customer)
     {
         $customer = new $Customer();
-        $id = $customer->create($this->request->all())->id;
-        $url = route('customers.show', ['id' => $id]);
-        Log::info('Customer '.$id.' added');
+        $customer = $customer->create($this->request->all());
+        $url = route('customers.show', ['id' => $customer->id]);
+        Log::info('Customer '.$customer->id.' added');
 
         return response()->json([
                 'message' => 'customer added',

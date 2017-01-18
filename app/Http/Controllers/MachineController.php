@@ -60,9 +60,9 @@ class MachineController extends Controller
     public function store(Machine $Machine, StoreMachine $request)
     {
         $machine = new $Machine();
-        $id = $machine->create($this->request->all())->id;
-        $url = route('machines.show', ['id' => $id]);
-        Log::info('machine '.$id.' added');
+        $machine = $machine->create($this->request->all());
+        $url = route('machines.show', ['id' => $machine->id]);
+        Log::info('machine '.$machine->id.' added');
 
         return response()->json([
                 'message' => 'machine added',
